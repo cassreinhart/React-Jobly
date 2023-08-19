@@ -1,9 +1,12 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, {useContext} from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import UserContext from './auth/UserContext'
 import "./Nav.css"
 
-const Nav = () => {
-  return (
+const Nav = ({logout}) => {
+    const {currentUser} = useContext(UserContext)
+
+    return (
     <div className='Nav'>
         {currentUser ? (
             <nav className='Nav'>
@@ -19,9 +22,9 @@ const Nav = () => {
                 <NavLink exact to="/profile">
                     Profile
                 </NavLink>
-                <NavLink exact to="/logout">
-                    LogOut
-                </NavLink>
+                <Link to="/" onClick={logout}>
+                    LogOut {currentUser.username}
+                </Link>
             </nav>
         ) : (
             <nav>
@@ -36,8 +39,6 @@ const Nav = () => {
                 </NavLink>
             </nav>
         )}
-        
-    
     </div>
   )
 }
