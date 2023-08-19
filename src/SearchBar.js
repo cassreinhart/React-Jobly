@@ -1,18 +1,14 @@
-import React, {useState} from 'react'
+import React from 'react'
 import useFields from './hooks/useFields'
 
-const SearchBar = () => {
+const SearchBar = ({searchFor}) => {
     const [formData, handleChange, resetFormData]= useFields({
         search: ""
     })
     
-    const search = async (term) => {
-        const res = await axios.get(term);
-        return res.data //this won't work yet- need to integrate backend route
-    }
     const handleSubmit = (e) => {
         e.preventDefault()
-        search(formData.search)
+        searchFor(formData.search)
         resetFormData()
     }
   return (
@@ -24,7 +20,7 @@ const SearchBar = () => {
             value={formData.search}
             placeholder='Enter search term...'
             onChange={handleChange}/>
-            <button>Submit</button>
+            <button type='submit'>Submit</button>
         </form>
     </div>
   )

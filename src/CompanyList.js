@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import SearchBar from './SearchBar'
 import Company from './Company'
 import JoblyApi from '../api'
-import useFetch from './hooks/useFetch'
 
 const CompanyList = () => {
     const [companies, setCompanies] = useState(null)
