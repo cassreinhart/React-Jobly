@@ -7,7 +7,6 @@ const Home = () => {
         <h1>Jobly</h1>
         <h3>All the jobs in one place.</h3>
         {user ? (<h2>Welcome back, {user.username}</h2>) : <LoginOrSignUpButtons />}
-        
     </div>
   )
 }
