@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import useLocalStorage from './hooks/useLocalStorage';
 import Nav from './Nav';
 import Routes from './Routes';
 import LoadingSpinner from './LoadingSpinner';
@@ -15,7 +16,7 @@ function App() {
     const [isLoaded, setIsLoaded] = useState(false)
     const [currUser, setCurrUser] = useState(null)
     const [applicationIds, setApplicationIds] = useState(new Set([]))
-    const [token, setToken] = useState(TOKEN_STORAGE_ID)
+    const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID)
 
     useEffect(loadUser = () => {
         const getCurrUser = async () =>  {
