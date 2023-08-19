@@ -36,6 +36,18 @@ class JoblyApi {
 
   // Individual API routes
 
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  /** Get companies (filtered by name if not undefined) */
+
+  static async getCompanies(name) {
+    let res = await this.request("companies", { name });
+    return res.companies;
+  }
+
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
@@ -43,33 +55,38 @@ class JoblyApi {
     return res.company;
   }
 
-  // obviously, you'll add a lot here ...
-  // Get details on jobs by company handle
-  static async getJobsByCompany(handle) {
-    let res = await this.request(`companies/${handle}`)
-    return res.company.jobs
+  /** Get list of jobs (filtered by title if not undefined) */
+
+  static async getJobs(title) {
+    let res = await this.request("jobs", { title });
+    return res.jobs;
   }
 
-  //get all companies
-  static async getCompanies() {
-    let res = await this.request(`companies`)
-    return res.data;
+  /** Apply to a job */
+
+  static async applyToJob(username, id) {
+    await this.request(`users/${username}/jobs/${id}`, {}, "post");
   }
 
-  //get all jobs
-  static async getJobs() {
-    let res = await this.request(`jobs`)
-    return res.data
+  /** Get token for login from username, password. */
+
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
   }
 
-  static async searchForCompany(name) {
-    let res = await this.request(`companies/`, data={name})
-    return res.data;
+  /** Signup for site. */
+
+  static async signup(data) {
+    let res = await this.request(`auth/register`, data, "post");
+    return res.token;
   }
 
-  static async searchForJob(title) {
-    let res = await this.request(`jobs/`, data={title})
-    return res.data
+  /** Save user profile page. */
+
+  static async saveProfile(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
   }
 }
 
@@ -77,3 +94,5 @@ class JoblyApi {
 JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+
+export default JoblyApi;
